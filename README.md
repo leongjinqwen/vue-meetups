@@ -1,4 +1,4 @@
-# vue_todo
+# vue_meetups_app
 
 ## Project setup
 ```
