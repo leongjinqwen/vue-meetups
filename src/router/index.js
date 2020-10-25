@@ -17,20 +17,20 @@ const routes = [
     component: Home
   },
   {
-    path: '/meetups/',
-    name: 'Meet Up',
+    path: '/meetups',
+    name: 'Show Meet Up',
     component: MeetUps
+  },
+  {
+    path: '/meetups/new',
+    name: 'Create Meet Up',
+    component: CreateMeetUp
   },
   {
     path: '/meetups/:id',
     name: 'Meet Up',
     props: true,
     component: MeetUp
-  },
-  {
-    path: '/meetups/new',
-    name: 'Create Meet Up',
-    component: CreateMeetUp
   },
   {
     path: '/users/new',

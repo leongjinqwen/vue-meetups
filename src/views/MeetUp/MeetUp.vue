@@ -6,9 +6,9 @@
           <v-img class="white--text align-end" :src="meetup.imgUrl" height="400px">
             <v-card-title>{{meetup.title}}</v-card-title>
           </v-img>
-          <v-card-subtitle class="pb-0 info--text">{{meetup.date}} - Location</v-card-subtitle>
+          <v-card-subtitle class="pb-0 info--text">{{meetup.date | date }} - {{meetup.location}}</v-card-subtitle>
           <v-card-text>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia voluptates, minima mollitia quis nobis itaque neque. Eveniet perferendis minus ducimus ab ut molestias blanditiis aliquam nisi dolor, autem suscipit illo.</div>
+            <div>{{meetup.desc}}</div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

@@ -30,7 +30,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down" >
-        <v-btn text v-for="item in menuItems" :key="item.title" :to="item.link">
+        <v-btn text v-for="item in menuItems" :key="item.title" :to="item.link" exact>
           <v-icon dark left>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
@@ -50,7 +50,7 @@
         meetupPath: mdiAccountMultiple,
         logoutPath: mdiLogoutVariant,
         menuItems : [
-          { icon: mdiAccountMultiple, title: "View Meetups", link:"/meetups/" },
+          { icon: mdiAccountMultiple, title: "View Meetups", link:"/meetups" },
           { icon: mdiMapMarker, title: "Organize Meetup", link:"/meetups/new" },
           { icon: mdiAccount, title: "Profile", link:"/profile" },
           { icon: mdiLockOpen, title: "Sign In", link:"/sessions/new" },

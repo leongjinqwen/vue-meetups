@@ -5,7 +5,7 @@
         <v-card class="mx-auto mb-3" v-for="meetup in meetups" :key="meetup.id">
           <v-img :src="meetup.imgUrl" height="400px"></v-img>
           <v-card-title>{{meetup.title}}</v-card-title>
-          <v-card-subtitle>{{meetup.date}}</v-card-subtitle>
+          <v-card-subtitle>{{meetup.date | date}}</v-card-subtitle>
           <v-card-actions>
             <v-btn color="primary" text :to="`/meetups/${meetup.id}`" >
               View

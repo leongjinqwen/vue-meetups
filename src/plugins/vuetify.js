@@ -15,7 +15,7 @@ export default new Vuetify({
       light: {
         primary: colors.indigo,
         secondary: colors.blueGrey.darken3,
-        success:colors.green.accent2,
+        success:colors.green.darken1,
         warning:colors.yellow.darken2,
         info:colors.cyan.darken1,
         accent: colors.grey.lighten4, 
