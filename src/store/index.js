@@ -31,8 +31,7 @@ export default new Vuex.Store({
         imgUrl: payload.imageUrl,
         date: payload.date
       }
-      // store in firebase
-      commit('createMeetup', meetup)
+      commit('createMeetup', meetup) // store in firebase
     },
     signUserUp({commit}, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
@@ -42,14 +41,26 @@ export default new Vuex.Store({
             id: resp.user.uid,
             registeredMeetUps: []
           }
-          console.log(newUser)
+          commit('setUser', newUser) 
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    signUserIn({commit}, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(resp => {
+          console.log(resp)
+          const newUser = {
+            id: resp.user.uid,
+            registeredMeetUps: []
+          }
           commit('setUser', newUser) 
         })
         .catch(error => {
           console.log(error)
         })
     }
-
   },
   modules: {
   },
