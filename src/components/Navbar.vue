@@ -11,7 +11,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item dense v-for="item in menuItems" :key="item.title" :to="item.link">
+        <v-list-item dense v-for="item in menuItems" :key="item.title" :to="item.link" exact>
           <v-list-item-icon>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-item-icon>
@@ -49,13 +49,27 @@
         sideNav: false,
         meetupPath: mdiAccountMultiple,
         logoutPath: mdiLogoutVariant,
-        menuItems : [
-          { icon: mdiAccountMultiple, title: "View Meetups", link:"/meetups" },
-          { icon: mdiMapMarker, title: "Organize Meetup", link:"/meetups/new" },
-          { icon: mdiAccount, title: "Profile", link:"/profile" },
+        
+      }
+    },
+    computed: {
+      menuItems(){
+        let menuItems = [
           { icon: mdiLockOpen, title: "Sign In", link:"/sessions/new" },
           { icon: mdiLogoutVariant, title: "Sign Out", link:"/users/new" },
         ]
+        if (this.userIsAuthenticated){ // if logged in
+          menuItems = [
+            { icon: mdiAccountMultiple, title: "View Meetups", link:"/meetups" },
+            { icon: mdiMapMarker, title: "Organize Meetup", link:"/meetups/new" },
+            { icon: mdiAccount, title: "Profile", link:"/profile" },
+          ]
+        }
+        return menuItems
+      },
+      userIsAuthenticated(){
+        console.log(this.$store.getters.user)
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
       }
     }
   }
