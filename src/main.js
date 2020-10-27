@@ -27,6 +27,11 @@ new Vue({
       messagingSenderId: process.env.VUE_APP_FIREBASE_SENDER_ID,
       appId: process.env.VUE_APP_FIREBASE_APP_ID
     })
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user){
+        this.$store.dispatch('autoSignin', user)
+      }
+    })
     this.$store.dispatch('loadedMeetUps')
   }
 }).$mount('#app')

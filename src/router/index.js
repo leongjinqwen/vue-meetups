@@ -6,6 +6,7 @@ import SignIn from '@/views/User/SignIn'
 import MeetUps from '@/views/MeetUp/MeetUps'
 import MeetUp from '@/views/MeetUp/MeetUp'
 import CreateMeetUp from '@/views/MeetUp/CreateMeetUp'
+import AuthGuard from './auth-guard'
 // @ is an alias to /src
 
 Vue.use(VueRouter)
@@ -24,7 +25,8 @@ const routes = [
   {
     path: '/meetups/new',
     name: 'Create Meet Up',
-    component: CreateMeetUp
+    component: CreateMeetUp,
+    beforeEnter: AuthGuard
   },
   {
     path: '/meetups/:id',
@@ -48,7 +50,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/User/Profile.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/User/Profile.vue'),
+    beforeEnter: AuthGuard
   }
 ]
 

@@ -60,22 +60,17 @@
           <v-layout row class="mb-2">
             <v-flex xs12 sm6 offset-sm3>
               <h4>Choose Date & Time</h4>
-              <v-date-picker 
-                color="success"
-                header-color="success"
-                v-model="date"
-                elevation="15"></v-date-picker>
+              <v-row>
+                <v-col>
+                  <v-date-picker color="info" header-color="info" v-model="date" elevation="15"></v-date-picker>
+                </v-col>
+                <v-spacer></v-spacer>
+                <v-col>
+                  <v-time-picker v-model="time" color="info" elevation="15"></v-time-picker>
+                </v-col>
+              </v-row>
             </v-flex>
           </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-time-picker 
-                v-model="time"
-                color="success"
-                elevation="15"></v-time-picker>
-            </v-flex>
-          </v-layout>
-          
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-btn type="submit" class="primary" :disabled="!formIsValid">Create Meetup</v-btn>

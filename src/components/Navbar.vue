@@ -19,6 +19,14 @@
             <v-list-item-title>{{item.title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item dense v-if="userIsAuthenticated" @click="onLogout">
+          <v-list-item-icon>
+            <v-icon>{{logoutPath}}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Sign Out</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar class="primary" dark>
@@ -34,29 +42,31 @@
           <v-icon dark left>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
+        <v-btn text v-if="userIsAuthenticated" @click="onLogout">
+          <v-icon dark left>{{logoutPath}}</v-icon>
+          Sign Out
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
 </template>
 
 <script>
-  import { mdiAccountMultiple,mdiLogoutVariant,mdiAccount,mdiMapMarker,mdiLockOpen } from '@mdi/js';
+  import { mdiAccountMultiple,mdiAccountPlus,mdiLogoutVariant,mdiAccount,mdiMapMarker,mdiLockOpen } from '@mdi/js';
 
   export default {
     name: 'Navbar',
     data() {
       return {
         sideNav: false,
-        meetupPath: mdiAccountMultiple,
         logoutPath: mdiLogoutVariant,
-        
       }
     },
     computed: {
       menuItems(){
         let menuItems = [
           { icon: mdiLockOpen, title: "Sign In", link:"/sessions/new" },
-          { icon: mdiLogoutVariant, title: "Sign Out", link:"/users/new" },
+          { icon: mdiAccountPlus, title: "Sign Up", link:"/users/new" },
         ]
         if (this.userIsAuthenticated){ // if logged in
           menuItems = [
@@ -70,6 +80,11 @@
       userIsAuthenticated(){
         console.log(this.$store.getters.user)
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods: {
+      onLogout(){
+        this.$store.dispatch('logout')
       }
     }
   }
