@@ -10,51 +10,27 @@
         <v-form @submit.prevent="onCreateMeetup">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="title"
-                v-model="title"
-                label="Title"
-                id="title"
-                :rules="[rules.required]">
-              </v-text-field>
+              <v-text-field name="title" v-model="title" label="Title" :rules="[rules.required]"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="location"
-                v-model="location"
-                label="Location"
-                id="location"
-                :rules="[rules.required]">
-              </v-text-field>
+              <v-text-field name="location" v-model="location" label="Location" :rules="[rules.required]"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="imageUrl"
-                v-model="imageUrl"
-                label="Image Url"
-                id="image-url"
-                :rules="[rules.required]">
-              </v-text-field>
+              <v-file-input type="file" label="Upload Image" ref="imagefile" show-size accept="image/*" v-model="image" @change="onSelectFile"></v-file-input>
+            </v-flex>
+          </v-layout>
+          <v-layout row v-if="imageUrl">
+            <v-flex xs12 sm6 offset-sm3>
+              <img :src="imageUrl" width="100%" alt="preview-image">
             </v-flex>
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <img :src="imageUrl" width="100%">
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="desc"
-                v-model="desc"
-                label="Description"
-                id="desc"
-                :rules="[rules.required]">
-              </v-text-field>
+              <v-text-field name="desc" v-model="desc" label="Description" :rules="[rules.required]"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row class="mb-2">
@@ -89,8 +65,9 @@
         title: '',
         date: new Date().toISOString().substr(0, 10),
         time: new Date(),
-        location: '',
         imageUrl: '',
+        location: '',
+        image: null,
         desc: '',
         rules: {
           required: value => !!value || 'Required.',
@@ -120,15 +97,29 @@
         if (!this.formIsValid) {
           return
         }
+        if (!this.image) {
+          return
+        }
         const meetupData = {
           title: this.title,
           location: this.location,
-          imageUrl: this.imageUrl,
+          image: this.image,
           desc: this.desc,
           date: this.formatDate
         }
         this.$store.dispatch('createMeetup', meetupData)
         this.$router.push('/meetups')
+      },
+      onSelectFile(){
+        let filename = this.image.name
+        if (filename.lastIndexOf('.') <= 0){
+          return alert("Please select valid file.")
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load',()=>{
+          this.imageUrl = fileReader.result
+        })
+        fileReader.readAsDataURL(this.image)
       }
     }
   }
