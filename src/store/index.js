@@ -7,15 +7,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loadedMeetUps: [
-      { id:1, desc:'Meet us in New York', location:'New York' , date:new Date(), title:"Meet up in New York", imgUrl:"https://cdn.vox-cdn.com/thumbor/kPW-T-fRW089pshIztZCHOWrCXU=/0x0:2800x1874/1200x800/filters:focal(1195x378:1643x826)/cdn.vox-cdn.com/uploads/chorus_image/image/64043139/shutterstock_240592135.0.jpg" },
-      { id:2, desc:'Meet us in Las Vegas', location:'Las Vegas' , date:new Date(), title:"Meet up in Las Vegas", imgUrl:"https://cf.bstatic.com/images/hotel/max1024x768/263/263858373.jpg" },
-      { id:3, desc:'Meet us in Miami', location:'Miami' , date:new Date(), title:"Meet up in Miami", imgUrl:"https://media.timeout.com/images/105617718/image.jpg" },
+      // { id:1, desc:'Meet us in New York', location:'New York' , date:new Date(), title:"Meet up in New York", imgUrl:"https://cdn.vox-cdn.com/thumbor/kPW-T-fRW089pshIztZCHOWrCXU=/0x0:2800x1874/1200x800/filters:focal(1195x378:1643x826)/cdn.vox-cdn.com/uploads/chorus_image/image/64043139/shutterstock_240592135.0.jpg" },
+      // { id:2, desc:'Meet us in Las Vegas', location:'Las Vegas' , date:new Date(), title:"Meet up in Las Vegas", imgUrl:"https://cf.bstatic.com/images/hotel/max1024x768/263/263858373.jpg" },
+      // { id:3, desc:'Meet us in Miami', location:'Miami' , date:new Date(), title:"Meet up in Miami", imgUrl:"https://media.timeout.com/images/105617718/image.jpg" },
     ],
     user: null,
     loading: false,
     error: null
   },
   mutations: {
+    setLoadedMeetUps(state, payload){
+      state.loadedMeetUps = payload
+    },
     createMeetup(state, payload){
       state.loadedMeetUps.push(payload)
     },
@@ -33,16 +36,48 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loadedMeetUps({commit}) {
+      commit('setLoading', true)
+      firebase.database().ref('meetups').once('value')
+        .then(data=>{
+          commit('setLoading', false)
+          const meetups = []
+          const obj = data.val()
+          for (let key in obj){
+            meetups.push({
+              id: key,
+              title: obj[key].title,
+              location: obj[key].location,
+              desc: obj[key].desc,
+              imgUrl: obj[key].imgUrl,
+              date: obj[key].date
+            })
+          }
+          commit('setLoadedMeetUps', meetups)
+        })
+        .then(error=>{
+          console.log(error)
+        })
+    },
     createMeetup({commit}, payload){
       const meetup = {
-        id: 4,
         title: payload.title,
         location: payload.location,
         desc: payload.desc,
         imgUrl: payload.imageUrl,
-        date: payload.date
+        date: payload.date.toISOString()
       }
-      commit('createMeetup', meetup) // store in firebase
+      firebase.database().ref('meetups').push(meetup)
+        .then(resp=>{
+          const key = resp.key
+          commit('createMeetup', {
+            ...meetup,
+            id: key
+          }) // store in firebase
+        })
+        .then(error => {
+          console.log(error)
+        })
     },
     signUserUp({commit}, payload) {
       commit('setLoading', true)

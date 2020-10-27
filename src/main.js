@@ -27,5 +27,6 @@ new Vue({
       messagingSenderId: process.env.VUE_APP_FIREBASE_SENDER_ID,
       appId: process.env.VUE_APP_FIREBASE_APP_ID
     })
+    this.$store.dispatch('loadedMeetUps')
   }
 }).$mount('#app')
