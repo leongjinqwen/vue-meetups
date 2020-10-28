@@ -22,6 +22,20 @@ export default new Vuex.Store({
     createMeetup(state, payload){
       state.loadedMeetUps.push(payload)
     },
+    updateMeetup(state, payload){
+      const meetup = state.loadedMeetUps.find((meetup)=>{
+        return meetup.id == payload.id
+      })
+      if (payload.title){
+        meetup.title = payload.title
+      }
+      if (payload.desc){
+        meetup.desc = payload.desc
+      }
+      if (payload.location){
+        meetup.location = payload.location
+      }
+    },
     setUser(state, payload){
       state.user = payload
     },
@@ -56,8 +70,30 @@ export default new Vuex.Store({
           }
           commit('setLoadedMeetUps', meetups)
         })
-        .then(error=>{
+        .catch(error=>{
           console.log(error)
+        })
+    },
+    updateMeetup({commit},payload){
+      commit('setLoading', true)
+      const updateObj = {}
+      if (payload.title){
+        updateObj.title = payload.title
+      }
+      if (payload.desc){
+        updateObj.desc = payload.desc
+      }
+      if (payload.location){
+        updateObj.location = payload.location
+      }
+      firebase.database().ref('meetups').child(payload.id).update(updateObj)
+        .then(()=>{
+          commit('setLoading', false)
+          commit('updateMeetup', payload)
+        })
+        .catch(error=>{
+          console.log(error)
+          commit('setLoading', false)
         })
     },
     createMeetup({commit, getters}, payload){
@@ -73,7 +109,6 @@ export default new Vuex.Store({
       firebase.database().ref('meetups').push(meetup)
         .then(resp=>{
           key = resp.key
-          
           return key
         })
         .then(key =>{
@@ -95,7 +130,7 @@ export default new Vuex.Store({
             imgUrl: imageUrl
           }) // store in firebase
         })
-        .then(error => {
+        .catch(error => {
           console.log(error)
         })
     },
@@ -104,7 +139,6 @@ export default new Vuex.Store({
       commit('clearError')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(resp => {
-          console.log(resp.user)
           const newUser = {
             id: resp.user.uid,
             registeredMeetUps: []

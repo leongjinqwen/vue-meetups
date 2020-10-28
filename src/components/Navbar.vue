@@ -78,7 +78,6 @@
         return menuItems
       },
       userIsAuthenticated(){
-        console.log(this.$store.getters.user)
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
       }
     },

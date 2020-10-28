@@ -6,10 +6,12 @@ import store from './store'
 import * as firebase from 'firebase'
 import DateFilter from './filters/date'
 import AlertCmp from './components/Alert.vue'
+import EditMeetupModal from './components/EditMeetupModal.vue'
 
 Vue.config.productionTip = false
 Vue.filter('date',DateFilter)
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meetup-modal', EditMeetupModal)
 
 new Vue({
   vuetify,

@@ -8,6 +8,7 @@
         <v-btn large router to="/meetups/new" class="info ml-2">Organize meetup</v-btn>
       </v-flex>
     </v-layout>
+    <!-- loader -->
     <v-layout>
       <v-flex xs12 class="text-center mt-3">
         <v-progress-circular indeterminate color="primary" :width="8" :size="100" v-if="loading"></v-progress-circular>
