@@ -18,13 +18,13 @@
           </v-card-title>
           <v-img class="white--text align-end" :src="meetup.imgUrl" height="400px">
           </v-img>
-          <v-card-subtitle class="pb-0 info--text">{{meetup.date | date }} - {{meetup.location}}</v-card-subtitle>
+          <v-card-subtitle class="pb-0 info--text">{{ meetup.date | date }} - {{meetup.location}}</v-card-subtitle>
           <v-card-text>
             <div>{{meetup.desc}}</div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <app-register-modal :meetupId="meetup.id"></app-register-modal>
+            <app-register-modal :meetupId="meetup.id" v-if="userIsAuthenticated && !userIsCreator"></app-register-modal>
           </v-card-actions>
         </v-card>
       </v-flex>
