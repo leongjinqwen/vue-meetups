@@ -24,9 +24,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text>
-              Register Now!
-            </v-btn>
+            <app-register-modal :meetupId="meetup.id"></app-register-modal>
           </v-card-actions>
         </v-card>
       </v-flex>
