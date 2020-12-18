@@ -1,9 +1,11 @@
 import * as firebase from 'firebase'
 
 export default {
+
   state: {
     user: null,
   },
+
   mutations: {
     registerUserForMeetUps(state, payload){
       const id = payload.id
@@ -22,6 +24,7 @@ export default {
       state.user = payload
     },
   },
+
   actions: {
     registerUserForMeetUps({commit, getters}, payload){ // meetupId
       commit('setLoading', true)
@@ -125,6 +128,7 @@ export default {
       commit('setUser', null)
     },
   },
+
   getters: {
     user (state) {
       return state.user // retrieve user from state

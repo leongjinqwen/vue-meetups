@@ -59,4 +59,10 @@ const router = new VueRouter({
   routes
 })
 
+// This callback runs before every route change, including on page load.
+router.beforeEach((to, from, next) => {
+  document.title = "Meetify | " + to.name ;
+  next()
+})
+
 export default router

@@ -1,4 +1,9 @@
-# vue_meetups_app
+# Meetify 
+A Meetups App build with Vue.js and Firebase. User and Meetup created were stored in Firebase Realtime Database.   
+
+1. User can view, create, and register meetup
+1. User need to login to create and register for meetup.
+
 
 ## Project setup
 ```

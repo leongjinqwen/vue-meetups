@@ -2,6 +2,7 @@ import * as firebase from 'firebase'
 
 
 export default {
+
   state: {
     loadedMeetUps: [
       { id:1, desc:'Meet us in New York', location:'New York' , date:new Date(), title:"Meet up in New York", imgUrl:"https://cdn.vox-cdn.com/thumbor/kPW-T-fRW089pshIztZCHOWrCXU=/0x0:2800x1874/1200x800/filters:focal(1195x378:1643x826)/cdn.vox-cdn.com/uploads/chorus_image/image/64043139/shutterstock_240592135.0.jpg" },
@@ -9,6 +10,7 @@ export default {
       { id:3, desc:'Meet us in Miami', location:'Miami' , date:new Date(), title:"Meet up in Miami", imgUrl:"https://media.timeout.com/images/105617718/image.jpg" },
     ],
   },
+
   mutations: {
     setLoadedMeetUps(state, payload){
       state.loadedMeetUps = payload
@@ -34,6 +36,7 @@ export default {
       }
     },
   },
+
   actions: {
     loadedMeetUps({commit}) {
       commit('setLoading', true)
@@ -124,6 +127,7 @@ export default {
         })
     },
   },
+  
   getters: {
     loadedMeetUps (state){
       return state.loadedMeetUps.sort((a,b)=>{
