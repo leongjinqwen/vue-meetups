@@ -57,7 +57,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  mode: "history",
+  mode: "hash",
 })
 
 // This callback runs before every route change, including on page load.
